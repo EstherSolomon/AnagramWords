@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+.transparent_btn {
+	display: inline-block;
+	padding: 10px 14px;
+	color: #000;
+	border: 1px solid #FFF;
+	text-decoration: none;
+	font-size: 14px;
+	line-height: 120%;
+	background-color: rgba(255,255,255, 0);
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-transition: background-color 300ms ease;
+	-moz-transition: background-color 300ms ease;
+	transition: background-color 300ms ease;
+	cursor: pointer;
+}
+</style>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Adding Words</title>
+    <div>
+				<h3 align="left">Adding words in Application</h3>
+       <a href="/"><h4 class="one" align="right">Back to Home</h4></a>
+    </div>
+</head>
+<body>
+    <form method="post" action="/add" >
+      <div class="row" align="center">
+
+          <br>
+          <br>
+									<label for="focusedinput" >Add word:</label>
+
+										<input type="text" name="word" required=True class="form-control1" id="focusedinput" placeholder="Enter a word" pattern="[a-z]{1,15}$">
+
+            <br>
+						<br>
+
+               <button type="submit" value="add" name="button" id="btn_click"  class="btn btn-primary btn-flat btn-pri"><i class="fa fa-plus" aria-hidden="true"></i> SUBMIT</button>
+
+      </div>
+    </form>
+    <form method="post" action="/add"  enctype="multipart/form-data">
+         <input type="file" accept="text/*" required=True name="afile" class="form-control1" id="exampleInputFile">
+         <button type="submit" value="add"  name="button" class="btn btn-primary btn-flat btn-pri"><i class="fa fa-plus" aria-hidden="true"></i> ADD</button>
+    </form>
+    <br><br>
+    <div class="table-responsive bs-example widget-shadow">
+    <h4>User entered words :</h4>
+    <table class="table table-bordered" > <thead>
+    <tr>
+        <th>Word</th>
+        <th>Lexographical order</th>
+				<th>Generate Anagram Words</th>
+        <th>Letter Count</th>
+				<th>Number of times occuured</th>
+
+    </tr>
+    </thead>
+
+
+        <tbody>
+            {% for anagram_word in anagram_data %}
+                <tr>
+                    <td>{{anagram_word.word}}</td>
+										<td>{{anagram_word.sorted_word}}
+                    <td>
+                        <form action="/generate" method="get">
+                           <input type="submit"  name="word" value="{{anagram_word.sorted_word}}">
+                        </form>
+                    </td>
+                    <td>{{anagram_word.letter_count}}</td>
+										<td>{{anagram_word.word_count}}</td>
+
+                </tr>
+            {% endfor %}
+    </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Search Words</title>
+    <div>
+      <h3 align="left">Searching words in Application</h3>
+       <a href="/"><h4 class="one" align="right">Back to Home</h4></a>
+    </div>
+</head>
+<body>
+    <form method="post" action="/search">
+      <div class="row" align="center">
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <label for="input" >Search for anagram words</label>
+            <input type="text" name="word" required=True class="form-control1" id="input" placeholder="Enter a word" pattern="[a-z]{1,15}$">
+            <br><br>
+           <button type="submit" value="add" name="button" id="btn_click"  class="btn btn-primary btn-flat btn-pri"><i class="fa fa-plus" aria-hidden="true"></i> SUBMIT</button>
+      </div>
+    </form>
+
+
+{% if present %}
+<div id="page-wrapper">
+			<div class="main-page">
+				<div class="tables">
+					<div class="panel-body widget-shadow">
+
+<div class="table-responsive bs-example widget-shadow">
+						<h4>All Anagram Words:</h4>
+						<table class="table table-bordered"> <thead>
+                        <tr>
+                            <th>Word</th>
+                            <th>Lexographical order</th>
+                            <th> Generate Anagram List</th>
+                            <th>Word length</th>
+                            <th>Occurance</th>
+                        </tr>
+                        </thead>
+                            <tbody>
+                                {% for anagram_word in anagram_data %}
+                                    <tr>
+                                        <td>{{anagram_word.word}}</td>
+                                        <td>{{anagram_word.sorted_word}}</td>
+                                        <td><form action="/generate" method="get">
+                                               <input type="submit"  name="word" value="{{anagram_word.sorted_word}}">
+                                            </form>
+                                        </td>
+                                        <td>{{anagram_word.letter_count}}</td>
+                                        <td>{{anagram_word.word_count}}</td>
+                                    </tr>
+                                {% endfor %}
+                        </tbody>
+                        </table>
+					</div>
+                    </div>
+                </div>
+                <div>
+
+{% else %}
+<div align="center">
+  <br>
+  <br>
+  <strong>This word is not found</strong>
+</div>
+{% endif %}
+
+
+</body>
+</html>
